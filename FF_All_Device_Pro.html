@@ -1,0 +1,122 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#111827">
+<title>FF All Device Pro</title>
+<style>
+:root{--bg:#0b1020;--panel:#141c31;--panel2:#1c2741;--text:#f3f6ff;--muted:#aab6d3;--red:#ff4655;--cyan:#5de4ff;--line:#2b3857}
+*{box-sizing:border-box}body{margin:0;background:radial-gradient(circle at top,#1a2542 0,#0b1020 48%);font-family:system-ui,-apple-system,Segoe UI,Roboto,sans-serif;color:var(--text)}
+header{padding:24px 16px 18px;text-align:center;border-bottom:1px solid var(--line)}.logo{display:inline-block;border:2px solid var(--red);border-radius:14px;padding:8px 12px;font-weight:900;letter-spacing:1px;color:var(--red)}h1{margin:12px 0 4px;font-size:clamp(25px,6vw,36px)}header p{margin:0;color:var(--muted)}
+main{max-width:900px;margin:auto;padding:16px}.notice{background:#35222b;border:1px solid #8e3544;color:#ffdce1;border-radius:12px;padding:12px;margin-bottom:16px;font-size:14px}
+nav{display:flex;gap:8px;overflow:auto;padding:2px 0 12px}nav button{white-space:nowrap;background:var(--panel2);color:var(--text);border:1px solid var(--line);border-radius:10px;padding:10px 13px;font-weight:700}nav button.active{background:var(--red);border-color:var(--red)}
+.panel{background:rgba(20,28,49,.95);border:1px solid var(--line);border-radius:16px;padding:16px;margin-bottom:14px;box-shadow:0 10px 30px #0002}.panel h2{margin:0 0 12px;font-size:20px}.muted{color:var(--muted);font-size:14px}.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:12px}
+label{display:block;font-size:14px;color:var(--muted);margin-bottom:6px}select,input[type=text]{width:100%;padding:11px;border:1px solid var(--line);border-radius:9px;background:#0d1426;color:var(--text);font:inherit}
+.range{margin:16px 0}.range-head{display:flex;justify-content:space-between;gap:10px}.range output{color:var(--cyan);font-weight:800}input[type=range]{width:100%;accent-color:var(--red)}
+.btn{border:0;border-radius:10px;background:var(--red);color:white;padding:11px 14px;font-weight:800;font:inherit;cursor:pointer}.btn.secondary{background:var(--panel2);border:1px solid var(--line)}.actions{display:flex;flex-wrap:wrap;gap:8px;margin-top:14px}
+.card{background:#0d1426;border:1px solid var(--line);padding:13px;border-radius:12px}.card strong{display:block;margin-bottom:5px}.hud{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}.hud div{background:#0d1426;border:1px dashed #516080;border-radius:10px;padding:12px;text-align:center;font-size:13px}.pill{display:inline-block;padding:3px 8px;border-radius:20px;background:#183747;color:var(--cyan);font-size:12px;font-weight:700}
+.target-area{height:240px;background:linear-gradient(180deg,#101b30,#0a1020);border:1px solid var(--line);border-radius:12px;position:relative;overflow:hidden;touch-action:manipulation}.target{position:absolute;width:42px;height:42px;border:3px solid var(--cyan);border-radius:50%;box-shadow:0 0 0 7px #5de4ff22;transform:translate(-50%,-50%);cursor:pointer;background:transparent}.target:after{content:"";position:absolute;left:50%;top:50%;width:6px;height:6px;background:var(--red);border-radius:50%;transform:translate(-50%,-50%)}
+footer{text-align:center;padding:16px;color:var(--muted);font-size:12px}.hidden{display:none!important}
+</style>
+</head>
+<body>
+<header><div class="logo">FF / ALL DEVICE</div><h1>FF All Device Pro</h1><p>Sensitivity • HUD • Aim Practice • Device Tips</p></header>
+<main>
+<div class="notice"><strong>Fair-play tool:</strong> This page gives practice and personal settings only. It does not connect to Free Fire or provide aimlock, auto-headshot, ESP cheats, speed hacks, or game-file modification.</div>
+<nav aria-label="Sections">
+<button class="active" data-tab="setup">Sensitivity</button><button data-tab="hudtab">3-Finger HUD</button><button data-tab="practice">Aim Trainer</button><button data-tab="device">Device Tips</button>
+</nav>
+<section id="setup" class="tab">
+<div class="panel"><h2>📱 Choose your device</h2><div class="grid">
+<div><label for="brand">Brand</label><select id="brand"><option>Other Android</option><option>OPPO</option><option>vivo</option><option>Samsung</option><option>Redmi / Xiaomi</option><option>Realme</option><option>POCO</option><option>Infinix</option><option>Tecno</option><option>Motorola</option><option>OnePlus</option></select></div>
+<div><label for="model">Model (optional)</label><input id="model" type="text" placeholder="e.g. OPPO A57 CPH2387"></div>
+<div><label for="style">Play style</label><select id="style"><option value="balanced">Balanced</option><option value="drag">Drag headshot practice</option><option value="steady">Steady / low shake</option></select></div>
+</div><p class="muted">Starter values only—not guaranteed best settings. Adjust gradually for your screen and comfort.</p></div>
+<div class="panel"><h2>🎯 Sensitivity starter settings</h2><div id="ranges"></div><div class="actions"><button class="btn" id="suggest">Suggest starter values</button><button class="btn secondary" id="save">Save settings</button><button class="btn secondary" id="export">Export JSON</button><button class="btn secondary" id="reset">Reset</button><input id="importFile" type="file" accept=".json,application/json" hidden><button class="btn secondary" id="import">Import JSON</button></div><p id="status" class="muted" role="status"></p></div>
+</section>
+<section id="hudtab" class="tab hidden">
+<div class="panel"><h2>🎮 3-finger HUD idea</h2><p class="muted">Use this as a layout sketch; arrange controls in the in-game HUD editor and keep buttons comfortable to reach.</p><div class="hud"><div>Top-left<br><strong>Fire button</strong><span class="pill">Index finger</span></div><div>Upper area<br><strong>Scope</strong><span class="pill">Index finger</span></div><div>Top-right<br><strong>Jump / crouch</strong><span class="pill">Index finger</span></div><div>Lower-left<br><strong>Joystick</strong><span class="pill">Left thumb</span></div><div>Lower-middle<br><strong>Gloo wall</strong><span class="pill">Right thumb</span></div><div>Lower-right<br><strong>Aim / weapon</strong><span class="pill">Right thumb</span></div></div><div class="actions"><button class="btn secondary" id="hudsave">Save HUD notes</button></div><p id="hudstatus" class="muted"></p></div>
+</section>
+<section id="practice" class="tab hidden">
+<div class="panel"><h2>🔴 Aim trainer</h2><p class="muted">Tap the target as it appears. This separate mini-game does not interact with Free Fire.</p><div class="grid"><div class="card"><strong>Score</strong><span id="score">0</span></div><div class="card"><strong>Time left</strong><span id="time">30</span>s</div><div class="card"><strong>Best score (this browser)</strong><span id="best">0</span></div></div><div style="height:12px"></div><div id="arena" class="target-area" aria-label="Aim practice area"><button id="target" class="target" aria-label="Tap target"></button></div><div class="actions"><button class="btn" id="start">Start 30-second practice</button></div><p id="practiceStatus" class="muted" aria-live="polite">Press Start to begin.</p></div>
+</section>
+<section id="device" class="tab hidden">
+<div class="panel"><h2>⚡ Safe performance checklist</h2><div class="grid">
+<div class="card"><strong>Before playing</strong>Close unused apps; keep enough storage free; enable Do Not Disturb if you want.</div>
+<div class="card"><strong>In-game graphics</strong>If the game lags, try Smooth graphics and a stable frame-rate option available on your device.</div>
+<div class="card"><strong>Temperature</strong>Avoid playing while charging if the phone heats up; let it cool down.</div>
+<div class="card"><strong>Touch controls</strong>Use normal system touch settings. Avoid unknown booster, macro, or cheat apps.</div>
+<div class="card"><strong>Network</strong>Use a stable trusted Wi-Fi or mobile connection. A VPN cannot guarantee lower ping.</div>
+<div class="card"><strong>Compatibility</strong>This page works in modern Android browsers. Device selection is manual; it does not change system settings.</div>
+</div></div>
+</section>
+</main><footer>FF All Device Pro • Single-page web app • Personal practice only</footer>
+<script>
+const labels=["General","Red Dot","2x Scope","4x Scope","Sniper Scope","Free Look"];
+const defaults=[185,175,165,150,90,140];
+const ranges=document.getElementById("ranges");
+labels.forEach((name,i)=>{
+  const row=document.createElement("div"); row.className="range";
+  row.innerHTML=`<div class="range-head"><label for="s${i}">${name}</label><output id="o${i}">${defaults[i]}</output></div><input id="s${i}" type="range" min="0" max="200" value="${defaults[i]}" aria-label="${name} sensitivity">`;
+  ranges.appendChild(row);
+  row.querySelector("input").addEventListener("input",e=>document.getElementById("o"+i).textContent=e.target.value);
+});
+function currentSettings(){return {brand:document.getElementById("brand").value,model:document.getElementById("model").value,style:document.getElementById("style").value,sensitivity:labels.map((name,i)=>({name,value:Number(document.getElementById("s"+i).value)}))};}
+function applySettings(data){
+ if(data.brand)document.getElementById("brand").value=data.brand;
+ if(typeof data.model==="string")document.getElementById("model").value=data.model;
+ if(data.style)document.getElementById("style").value=data.style;
+ if(Array.isArray(data.sensitivity))data.sensitivity.forEach((item,i)=>{if(i<labels.length&&Number.isFinite(Number(item.value))){let v=Math.max(0,Math.min(200,Number(item.value)));document.getElementById("s"+i).value=v;document.getElementById("o"+i).textContent=v;}});
+}
+document.querySelectorAll("nav button").forEach(btn=>btn.addEventListener("click",()=>{
+ document.querySelectorAll("nav button").forEach(b=>b.classList.toggle("active",b===btn));
+ document.querySelectorAll(".tab").forEach(tab=>tab.classList.toggle("hidden",tab.id!==btn.dataset.tab));
+}));
+document.getElementById("suggest").addEventListener("click",()=>{
+ let vals=defaults.slice(); const style=document.getElementById("style").value;
+ if(style==="drag")vals=[195,185,175,160,95,150];
+ if(style==="steady")vals=[165,150,140,125,75,125];
+ vals.forEach((v,i)=>{document.getElementById("s"+i).value=v;document.getElementById("o"+i).textContent=v;});
+ document.getElementById("status").textContent="Starter values applied. Test in training mode and adjust in small steps.";
+});
+document.getElementById("save").addEventListener("click",()=>{
+ try{localStorage.setItem("ffAllDeviceSettings",JSON.stringify(currentSettings()));document.getElementById("status").textContent="Saved in this browser on this device.";}catch(e){document.getElementById("status").textContent="Browser storage is unavailable. Use Export JSON instead.";}
+});
+document.getElementById("export").addEventListener("click",()=>{
+ const blob=new Blob([JSON.stringify(currentSettings(),null,2)],{type:"application/json"});
+ const url=URL.createObjectURL(blob);const a=document.createElement("a");a.href=url;a.download="ff-all-device-settings.json";a.click();URL.revokeObjectURL(url);
+ document.getElementById("status").textContent="Settings JSON exported.";
+});
+document.getElementById("reset").addEventListener("click",()=>{
+ defaults.forEach((v,i)=>{document.getElementById("s"+i).value=v;document.getElementById("o"+i).textContent=v;});
+ document.getElementById("brand").value="Other Android";document.getElementById("model").value="";document.getElementById("style").value="balanced";
+ document.getElementById("status").textContent="Reset to default starter values.";
+});
+document.getElementById("import").addEventListener("click",()=>document.getElementById("importFile").click());
+document.getElementById("importFile").addEventListener("change",async e=>{
+ const file=e.target.files[0];if(!file)return;
+ try{const data=JSON.parse(await file.text());applySettings(data);document.getElementById("status").textContent="Settings imported. Tap Save if you want to keep them in this browser.";}
+ catch(err){document.getElementById("status").textContent="Could not read that JSON file. Please select a valid settings export.";}
+ e.target.value="";
+});
+document.getElementById("hudsave").addEventListener("click",()=>{
+ const note="3-finger HUD idea: index finger—fire/scope/jump-crouch; left thumb—joystick; right thumb—aim/weapon/gloo wall.";
+ try{localStorage.setItem("ffAllDeviceHud",note);document.getElementById("hudstatus").textContent="HUD notes saved in this browser.";}catch(e){document.getElementById("hudstatus").textContent=note;}
+});
+let score=0,time=30,timer=null,running=false;
+const target=document.getElementById("target"),arena=document.getElementById("arena");
+function moveTarget(){const pad=26;const x=pad+Math.random()*Math.max(1,arena.clientWidth-pad*2);const y=pad+Math.random()*Math.max(1,arena.clientHeight-pad*2);target.style.left=x+"px";target.style.top=y+"px";}
+function endPractice(){running=false;clearInterval(timer);timer=null;target.disabled=true;document.getElementById("practiceStatus").textContent="Finished! Score: "+score+". Start again to practice more.";}
+document.getElementById("start").addEventListener("click",()=>{
+ clearInterval(timer);score=0;time=30;running=true;target.disabled=false;
+ document.getElementById("score").textContent=score;document.getElementById("time").textContent=time;
+ document.getElementById("practiceStatus").textContent="Go! Tap the target.";
+ moveTarget();timer=setInterval(()=>{time--;document.getElementById("time").textContent=time;if(time<=0)endPractice();},1000);
+});
+target.addEventListener("click",()=>{if(!running)return;score++;document.getElementById("score").textContent=score;moveTarget();});
+try{document.getElementById("best").textContent=localStorage.getItem("ffAimBest")||"0";}catch(e){}
+target.disabled=true;moveTarget();
+</script>
+</body>
+</html>
